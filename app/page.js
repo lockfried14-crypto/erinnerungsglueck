@@ -1,33 +1,75 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-const modules = [
-  ['🗺️','Reise planen','Ziel, Zeitraum, Unterkunft und Anreise an einem Ort.'],
-  ['🛂','Einreise & Visum','Wichtige Einreiseinformationen übersichtlich vorbereiten.'],
-  ['✓','Checklisten','Packliste, Dokumente und To-dos gemeinsam abhaken.'],
-  ['€','Budgetplaner','Urlaubsbudget festlegen und Ausgaben im Blick behalten.'],
-  ['📸','Erinnerungen','Fotos, Lieblingsmomente und kleine Geschichten bewahren.'],
-  ['👨‍👩‍👧','Familie','Reisende und ihre Bedürfnisse zentral hinterlegen.']
+const TABS=['Start','Reise','Planen','Budget','Erinnerungen'];
+const modules=[
+  ['✈️','Reise','Reisedaten, Unterkunft, Anreise und wichtige Infos'],
+  ['🛂','Einreise & Visum','Einreisebestimmungen und Dokumente im Blick behalten'],
+  ['✅','Checklisten','Packliste, Reiseapotheke und To-dos gemeinsam abhaken'],
+  ['€','Budget','Budget festlegen, Ausgaben erfassen und Restbudget sehen'],
+  ['📷','Erinnerungen','Fotos, Lieblingsmomente und kleine Geschichten bewahren'],
+  ['👨‍👩‍👧','Familie','Mitreisende und individuelle Bedürfnisse hinterlegen']
 ];
 
-export default function Home() {
+export default function Home(){
   const [active,setActive]=useState('Start');
-  const [trip,setTrip]=useState({ziel:'',von:'',bis:'',budget:''});
+  const [trip,setTrip]=useState({titel:'Unser Familienurlaub',ziel:'',von:'',bis:'',budget:'3000'});
+  const [expenses,setExpenses]=useState([]);
+  const [expense,setExpense]=useState({name:'',amount:''});
   const [saved,setSaved]=useState(false);
-  useEffect(()=>{try{const x=localStorage.getItem('eg-trip'); if(x)setTrip(JSON.parse(x));}catch{}},[]);
-  function save(){localStorage.setItem('eg-trip',JSON.stringify(trip));setSaved(true);setTimeout(()=>setSaved(false),1800)}
+  useEffect(()=>{try{const t=localStorage.getItem('eg-trip');const e=localStorage.getItem('eg-expenses');if(t)setTrip(JSON.parse(t));if(e)setExpenses(JSON.parse(e));}catch{}},[]);
+  const spent=useMemo(()=>expenses.reduce((s,x)=>s+Number(x.amount||0),0),[expenses]);
+  const budget=Number(trip.budget||0); const rest=Math.max(0,budget-spent);
+  function saveTrip(){localStorage.setItem('eg-trip',JSON.stringify(trip));setSaved(true);setTimeout(()=>setSaved(false),1500)}
+  function addExpense(){if(!expense.name||!expense.amount)return;const next=[...expenses,{...expense,id:Date.now()}];setExpenses(next);localStorage.setItem('eg-expenses',JSON.stringify(next));setExpense({name:'',amount:''})}
+  function go(tab){setActive(tab);setTimeout(()=>document.getElementById(tab.toLowerCase())?.scrollIntoView({behavior:'smooth',block:'start'}),30)}
   return <main>
-    <header className="top"><div className="brand"><span className="heart">♡</span><div><strong>Erinnerungsglück</strong><small>FAMILIEN-REISEPLANER</small></div></div><button className="profile">♡</button></header>
-    <section className="hero">
-      <div className="heroText"><span className="eyebrow">GEMEINSAME ZEIT. ERINNERUNGEN FÜRS LEBEN.</span><h1>Urlaub planen.<br/><em>Familienzeit genießen.</em></h1><p>Weniger Organisationsstress, mehr Vorfreude: Plant eure Reise gemeinsam und bewahrt die schönsten Erinnerungen an einem Ort.</p><button onClick={()=>document.getElementById('planner').scrollIntoView({behavior:'smooth'})}>Reise planen →</button></div>
-      <div className="scene"><div className="sun"></div><div className="family">♙ <b>♥</b> ♙</div><div className="sea"></div></div>
+    <header className="topbar">
+      <div className="logoMark" aria-label="Erinnerungsglück Logo"><span className="adult">●</span><span className="child">●</span><span className="adult">●</span><span className="heart">♥</span></div>
+      <div className="brandText"><strong>Erinnerungsglück</strong><small>GEMEINSAME ZEIT. ERINNERUNGEN FÜRS LEBEN.</small></div>
+    </header>
+
+    <section id="start" className="screen heroCard">
+      <div className="kicker">FAMILIEN-REISEPLANER</div>
+      <h1>Weniger Organisationsstress.<br/><em>Mehr gemeinsame Zeit.</em></h1>
+      <p>Plant eure Reise gemeinsam, behaltet alles Wichtige an einem Ort und haltet eure schönsten Momente fest.</p>
+      <button className="primary" onClick={()=>go('Reise')}>Reise öffnen <span>›</span></button>
     </section>
-    <section className="promise"><b>Planen.</b><span>Erleben.</span><b>Erinnern.</b><span>Glücklich sein.</span></section>
-    <section className="intro"><span className="eyebrow">ALLES FÜR EURE REISE</span><h2>Von der ersten Idee bis zur<br/><em>Lieblingserinnerung</em></h2><p>Erinnerungsglück begleitet euch durch die ganze Reise – einfach, familienfreundlich und ohne Zettelchaos.</p></section>
-    <section className="cards">{modules.map(([i,t,d])=><article key={t} onClick={()=>setActive(t)}><div className="icon">{i}</div><h3>{t}</h3><p>{d}</p><span>Öffnen →</span></article>)}</section>
-    <section id="planner" className="planner"><div><span className="eyebrow">EURE NÄCHSTE REISE</span><h2>Wohin geht euer<br/><em>nächstes Abenteuer?</em></h2><p>Legt die Eckdaten fest. Sie werden auf diesem Gerät gespeichert.</p></div><div className="form"><label>Reiseziel<input value={trip.ziel} onChange={e=>setTrip({...trip,ziel:e.target.value})} placeholder="z. B. Hurghada, Ägypten"/></label><div className="row"><label>Von<input type="date" value={trip.von} onChange={e=>setTrip({...trip,von:e.target.value})}/></label><label>Bis<input type="date" value={trip.bis} onChange={e=>setTrip({...trip,bis:e.target.value})}/></label></div><label>Budget (€)<input inputMode="decimal" value={trip.budget} onChange={e=>setTrip({...trip,budget:e.target.value})} placeholder="z. B. 3000"/></label><button onClick={save}>{saved?'✓ Gespeichert':'Reise speichern'}</button></div></section>
-    <footer><div className="brand"><span className="heart">♡</span><div><strong>Erinnerungsglück</strong><small>GEMEINSAME ZEIT. ERINNERUNGEN FÜRS LEBEN.</small></div></div><p>Mit Liebe für Familien gemacht. ♡</p></footer>
-    <nav className="bottom">{[['⌂','Start'],['☑','Planen'],['✈','Reise'],['▣','Erinnern']].map(([i,t])=><button key={t} className={active===t?'active':''} onClick={()=>{setActive(t);if(t==='Planen')document.getElementById('planner').scrollIntoView({behavior:'smooth'})}}><b>{i}</b><span>{t}</span></button>)}</nav>
+
+    <section className="screen tripBlock">
+      <div className="sectionHead"><div><div className="kicker">EURE REISEN</div><h2>{trip.titel}</h2></div><button className="round" onClick={()=>go('Reise')}>+</button></div>
+      <div className="tripCard"><div><b>{trip.ziel||'Reiseziel noch festlegen'}</b><span>{trip.von&&trip.bis?`${trip.von} – ${trip.bis}`:'Zeitraum noch offen'}</span></div><button onClick={()=>go('Planen')}>Planen</button></div>
+    </section>
+
+    <section className="screen moduleGrid">{modules.map(([i,t,d])=><button key={t} className="module" onClick={()=>go(t==='Budget'?'Budget':t==='Erinnerungen'?'Erinnerungen':t==='Reise'?'Reise':'Planen')}><span className="modIcon">{i}</span><b>{t}</b><small>{d}</small></button>)}</section>
+
+    <section id="reise" className="screen panel">
+      <div className="kicker">REISE ANLEGEN</div><h2>Unser nächstes Abenteuer</h2>
+      <label>Reisename<input value={trip.titel} onChange={e=>setTrip({...trip,titel:e.target.value})}/></label>
+      <label>Reiseziel<input value={trip.ziel} onChange={e=>setTrip({...trip,ziel:e.target.value})} placeholder="z. B. Hurghada, Ägypten"/></label>
+      <div className="two"><label>Von<input type="date" value={trip.von} onChange={e=>setTrip({...trip,von:e.target.value})}/></label><label>Bis<input type="date" value={trip.bis} onChange={e=>setTrip({...trip,bis:e.target.value})}/></label></div>
+      <button className="primary full" onClick={saveTrip}>{saved?'✓ Gespeichert':'Reise speichern'}</button>
+    </section>
+
+    <section id="planen" className="screen panel">
+      <div className="kicker">PLANEN</div><h2>Alles Wichtige vor der Reise</h2>
+      <div className="checklist">{['Reisepässe prüfen','Einreise- & Visabestimmungen prüfen','Auslandskrankenversicherung','Flug & Transfer hinterlegen','Packliste erstellen','Reiseapotheke zusammenstellen'].map(x=><label key={x}><input type="checkbox"/> <span>{x}</span></label>)}</div>
+    </section>
+
+    <section id="budget" className="screen panel budgetPanel">
+      <div className="kicker">BUDGETPLANER</div><h2>Urlaubskosten im Blick</h2>
+      <label>Gesamtbudget (€)<input inputMode="decimal" value={trip.budget} onChange={e=>setTrip({...trip,budget:e.target.value})} onBlur={saveTrip}/></label>
+      <div className="budgetStats"><div><small>Budget</small><b>{budget.toFixed(2)} €</b></div><div><small>Ausgegeben</small><b>{spent.toFixed(2)} €</b></div><div><small>Übrig</small><b>{rest.toFixed(2)} €</b></div></div>
+      <div className="expenseRow"><input value={expense.name} onChange={e=>setExpense({...expense,name:e.target.value})} placeholder="z. B. Transfer"/><input inputMode="decimal" value={expense.amount} onChange={e=>setExpense({...expense,amount:e.target.value})} placeholder="€"/><button onClick={addExpense}>+</button></div>
+      <div className="expenses">{expenses.length===0?<p>Noch keine Ausgaben erfasst.</p>:expenses.map(x=><div key={x.id}><span>{x.name}</span><b>{Number(x.amount).toFixed(2)} €</b></div>)}</div>
+    </section>
+
+    <section id="erinnerungen" className="screen panel memories">
+      <div className="kicker">ERINNERUNGEN</div><h2>Momente fürs Leben bewahren</h2><p>Hier entsteht euer gemeinsames Reisetagebuch mit Fotos, Lieblingsmomenten und kleinen Geschichten.</p>
+      <div className="memoryEmpty"><span>♡</span><b>Eure erste Erinnerung</b><small>Fotos und Texte kommen im nächsten Ausbauschritt hinzu.</small></div>
+    </section>
+
+    <nav className="bottomNav">{TABS.map(t=><button key={t} onClick={()=>go(t)} className={active===t?'active':''}><span>{t==='Start'?'⌂':t==='Reise'?'✈':t==='Planen'?'☑':t==='Budget'?'€':'♡'}</span><small>{t}</small></button>)}</nav>
   </main>
 }
