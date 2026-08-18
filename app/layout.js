@@ -1,4 +1,5 @@
 import './globals.css';
+import './brand-fix.css';
 
 export const metadata = {
   title: 'Erinnerungsglück – Familien-Reiseplaner',
@@ -7,12 +8,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="de" style={{ colorScheme: 'only light' }}>
+    <html lang="de" style={{ colorScheme: 'light' }}>
       <head>
-        <meta name="color-scheme" content="only light" />
-        <meta name="theme-color" content="#f8f0e8" />
+        <meta name="color-scheme" content="light only" />
+        <meta name="theme-color" content="#fff9f1" />
       </head>
-      <body style={{ colorScheme: 'only light' }}>{children}</body>
+      <body style={{ colorScheme: 'light', backgroundColor: '#fff9f1' }}>{children}</body>
     </html>
   );
 }
