@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 const C={cream:'#FFF8EF',paper:'#FFFCF7',green:'#124F49',green2:'#4F8179',rust:'#B84C36',salmon:'#DF9981',text:'#263B39',muted:'#68736F',line:'#EEE4DA'};
-const logo='/erinnerungsglueck-logo-hq.webp?v=20260818-source';
+const logo='/erinnerungsglueck-logo-hq.webp?v=20260818-auswahl2';
 
 export default function Home(){
   const [screen,setScreen]=useState('Start');
@@ -14,9 +14,9 @@ export default function Home(){
   const bottom=<nav style={{position:'fixed',left:0,right:0,bottom:0,height:72,zIndex:100,display:'flex',background:C.paper,borderTop:`1px solid ${C.line}`}}>{nav.map((n,i)=><button key={n} onClick={()=>go(n)} style={{flex:1,minWidth:0,border:0,background:'transparent',color:screen===n?C.rust:'#425452',fontWeight:screen===n?700:500,padding:'8px 0 5px'}}><span style={{display:'block',fontSize:20,lineHeight:1}}>{icons[i]}</span><small style={{display:'block',fontSize:8,marginTop:6,whiteSpace:'nowrap'}}>{n}</small></button>)}</nav>;
 
   if(screen==='Start') return <main style={{minHeight:'100svh',width:'100%',overflowX:'hidden',background:C.cream,color:C.text,paddingBottom:72}}>
-    <section style={{minHeight:'calc(100svh - 72px)',position:'relative',overflow:'hidden',padding:'8px 24px 190px',background:C.cream}}>
-      <div style={{height:190,display:'flex',alignItems:'center',justifyContent:'center',position:'relative',zIndex:10}}>
-        <img src={logo} alt="Erinnerungsglück" style={{display:'block',width:'min(330px,90vw)',height:178,objectFit:'contain'}}/>
+    <section style={{minHeight:'calc(100svh - 72px)',position:'relative',overflow:'hidden',padding:'10px 24px 190px',background:C.cream}}>
+      <div style={{height:180,display:'flex',alignItems:'flex-start',justifyContent:'center',position:'relative',zIndex:10,paddingTop:4}}>
+        <img src={logo} alt="Erinnerungsglück" style={{display:'block',width:'min(260px,72vw)',height:160,objectFit:'contain',objectPosition:'center top'}}/>
       </div>
       <div style={{position:'relative',zIndex:10,maxWidth:500}}>
         <div style={{fontSize:10,letterSpacing:'1.5px',fontWeight:700,color:C.green,margin:'2px 0 10px'}}>FAMILIEN-REISEPLANER</div>
@@ -33,7 +33,7 @@ export default function Home(){
       </div>
     </section>{bottom}</main>;
 
-  const header=(title,sub)=><><div style={{height:82,display:'grid',gridTemplateColumns:'42px 1fr 42px',alignItems:'center'}}><button onClick={()=>go('Start')} style={{border:0,background:'transparent',fontSize:24,color:C.green}}>☰</button><img src={logo} alt="Erinnerungsglück" style={{width:105,height:72,objectFit:'contain',margin:'auto'}}/><button style={{border:0,background:'transparent',fontSize:24,color:C.green}}>＋</button></div><h1 style={{fontFamily:'Georgia,serif',fontSize:31,lineHeight:1.05,color:C.green,margin:'4px 8px'}}>{title}</h1><p style={{fontSize:12,color:C.muted,margin:'0 8px 18px'}}>{sub}</p></>;
+  const header=(title,sub)=><><div style={{height:74,display:'grid',gridTemplateColumns:'42px 1fr 42px',alignItems:'center'}}><button onClick={()=>go('Start')} style={{border:0,background:'transparent',fontSize:24,color:C.green}}>☰</button><img src={logo} alt="Erinnerungsglück" style={{display:'block',width:92,height:62,objectFit:'contain',objectPosition:'center',margin:'auto'}}/><button style={{border:0,background:'transparent',fontSize:24,color:C.green}}>＋</button></div><h1 style={{fontFamily:'Georgia,serif',fontSize:31,lineHeight:1.05,color:C.green,margin:'4px 8px'}}>{title}</h1><p style={{fontSize:12,color:C.muted,margin:'0 8px 18px'}}>{sub}</p></>;
   const card={background:C.paper,border:`1px solid ${C.line}`,borderRadius:12,boxShadow:'0 4px 16px rgba(76,55,38,.07)',overflow:'hidden'};
   const row={padding:'15px 16px',borderBottom:`1px solid ${C.line}`,display:'flex',justifyContent:'space-between',alignItems:'center'};
 
