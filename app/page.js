@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
+// Deployment trigger: direct component build 2026-08-18
 const LOGO='/erinnerungsglueck-logo-hq.webp?v=20260818f';
 const FALLBACK='/erinnerungsglueck-logo.jpg?v=20260818f';
 const NAV=[['Start','⌂'],['Reise','♧'],['Packlisten','▣'],['Erinnerungen','♡'],['Budget','€']];
