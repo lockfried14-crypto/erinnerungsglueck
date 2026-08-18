@@ -1,19 +1,30 @@
 import './globals.css';
-import './brand-fix.css';
 
 export const metadata = {
   title: 'Erinnerungsglück – Familien-Reiseplaner',
-  description: 'Planen. Erleben. Erinnern. Gemeinsam Familienzeit genießen.'
+  description: 'Planen. Erleben. Erinnern. Gemeinsam Familienzeit genießen.',
+  colorScheme: 'only light',
+  themeColor: '#fff8ef'
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: 'cover',
+  colorScheme: 'only light',
+  themeColor: '#fff8ef'
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="de" style={{ colorScheme: 'light' }}>
+    <html lang="de" style={{ colorScheme: 'only light', backgroundColor: '#fff8ef' }}>
       <head>
-        <meta name="color-scheme" content="light only" />
-        <meta name="theme-color" content="#fff9f1" />
+        <meta name="color-scheme" content="only light" />
+        <meta name="supported-color-schemes" content="light" />
+        <meta name="theme-color" content="#fff8ef" />
       </head>
-      <body style={{ colorScheme: 'light', backgroundColor: '#fff9f1' }}>{children}</body>
+      <body style={{ colorScheme: 'only light', backgroundColor: '#fff8ef' }}>{children}</body>
     </html>
   );
 }
