@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
-const LOGO='https://raw.githubusercontent.com/lockfried14-crypto/erinnerungsglueck/main/public/erinnerungsglueck-logo-hq.webp?v=20260818d';
-const FALLBACK='https://raw.githubusercontent.com/lockfried14-crypto/erinnerungsglueck/main/public/erinnerungsglueck-logo.jpg?v=20260818d';
+const LOGO='/erinnerungsglueck-logo-hq.webp?v=20260818e';
+const FALLBACK='/erinnerungsglueck-logo.jpg?v=20260818e';
 const NAV=[['Start','⌂'],['Reise','♧'],['Packlisten','▣'],['Erinnerungen','♡'],['Budget','€']];
 const LISTS={
   'Handgepäck':['Reisepässe','Personalausweise','Buchungsbestätigung','Versicherungskarte','Tickets','Geldbörse','Handy','Ladegerät','Medikamente','Kopfhörer','Snacks','Trinkflasche','Feuchttücher','Wechselkleidung','Kuscheltier','Reiseunterlagen','Powerbank','Adapter','Sonnenbrille','Stift','Taschentücher','Desinfektion','Schlüssel','Notfallkontakte'],
