@@ -2,8 +2,7 @@ import './globals.css';
 
 export const metadata = {
   title: 'Erinnerungsglück – Familien-Reiseplaner',
-  description: 'Planen. Erleben. Erinnern. Gemeinsam Familienzeit genießen.',
-  themeColor: '#fff8ef'
+  description: 'Planen. Erleben. Erinnern. Gemeinsam Familienzeit genießen.'
 };
 
 export const viewport = {
@@ -11,18 +10,19 @@ export const viewport = {
   initialScale: 1,
   maximumScale: 1,
   viewportFit: 'cover',
-  themeColor: '#fff8ef'
+  themeColor: '#fff8ef',
+  colorScheme: 'light'
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="de" style={{ backgroundColor: '#fff8ef' }}>
+    <html lang="de" style={{ backgroundColor: '#fff8ef', colorScheme: 'light' }}>
       <head>
-        <meta name="color-scheme" content="light dark" />
-        <meta name="supported-color-schemes" content="light dark" />
+        <meta name="color-scheme" content="light" />
+        <meta name="supported-color-schemes" content="light" />
         <meta name="theme-color" content="#fff8ef" />
       </head>
-      <body>{children}</body>
+      <body style={{ backgroundColor: '#fff8ef', colorScheme: 'light' }}>{children}</body>
     </html>
   );
 }
