@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
-const LOGO='/erinnerungsglueck-logo.jpg';
-const HERO_LOGO='/erinnerungsglueck-logo-hq.webp';
+const LOGO='/erinnerungsglueck-logo-hq.webp';
+const HERO_LOGO=LOGO;
 const TABS=['Start','Reise','Planen','Budget','Erinnerungen'];
 const modules=[['✈️','Reise','Reisedaten, Unterkunft, Anreise und wichtige Infos'],['🛂','Einreise & Visum','Einreisebestimmungen und Dokumente im Blick behalten'],['✅','Checklisten','Packliste, Reiseapotheke und To-dos gemeinsam abhaken'],['€','Budget','Budget festlegen, Ausgaben erfassen und Restbudget sehen'],['📷','Erinnerungen','Fotos, Lieblingsmomente und kleine Geschichten bewahren'],['👨‍👩‍👧','Familie','Mitreisende und individuelle Bedürfnisse hinterlegen']];
 export default function Home(){
