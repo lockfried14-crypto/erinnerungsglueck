@@ -34,15 +34,14 @@ export default function Home(){
   function deleteMemory(id){if(!confirm('Diese Erinnerung wirklich löschen?'))return;saveMemories(memories.filter(x=>x.id!==id));if(editingMemoryId===id){setEditingMemoryId(null);setMemory({title:'',text:'',best:'',image:''})}}
 
   return <main>
-    <header className="topbar">
-      <img className="realLogo" src="/erinnerungsglueck-logo.jpg" alt="Erinnerungsglück – Familienlogo mit Vater, Mutter und Kind am Meer" />
-    </header>
-
     <section id="start" className="screen heroCard">
-      <div className="kicker">FAMILIEN-REISEPLANER</div>
-      <h1>Weniger Organisationsstress.<br/><em>Mehr gemeinsame Zeit.</em></h1>
-      <p>Plant eure Reise gemeinsam, behaltet alles Wichtige an einem Ort und haltet eure schönsten Momente fest.</p>
-      <button className="primary" onClick={()=>go('Reise')}>Reise öffnen <span>›</span></button>
+      <div className="heroBrand"><img src="/erinnerungsglueck-logo.jpg" alt="Erinnerungsglück – Familienlogo mit Vater, Mutter und Kind am Meer" /></div>
+      <div className="heroCopy">
+        <div className="kicker">FAMILIEN-REISEPLANER</div>
+        <h1>Weniger Organisationsstress.<br/><em>Mehr gemeinsame Zeit.</em></h1>
+        <p>Plant eure Reise gemeinsam, behaltet alles Wichtige an einem Ort und haltet eure schönsten Momente fest.</p>
+        <button className="primary" onClick={()=>go('Reise')}>Reise öffnen <span>›</span></button>
+      </div>
     </section>
 
     <section className="screen tripBlock">
@@ -52,9 +51,10 @@ export default function Home(){
 
     <section className="screen moduleGrid">{modules.map(([i,t,d])=><button key={t} className="module" onClick={()=>go(t==='Budget'?'Budget':t==='Erinnerungen'?'Erinnerungen':t==='Reise'?'Reise':'Planen')}><span className="modIcon">{i}</span><b>{t}</b><small>{d}</small></button>)}</section>
 
-    <section id="reise" className="screen panel"><div className="kicker">REISE ANLEGEN</div><h2>Unser nächstes Abenteuer</h2><label>Reisename<input value={trip.titel} onChange={e=>setTrip({...trip,titel:e.target.value})}/></label><label>Reiseziel<input value={trip.ziel} onChange={e=>setTrip({...trip,ziel:e.target.value})} placeholder="z. B. Hurghada, Ägypten"/></label><div className="two"><label>Von<input type="date" value={trip.von} onChange={e=>setTrip({...trip,von:e.target.value})}/></label><label>Bis<input type="date" value={trip.bis} onChange={e=>setTrip({...trip,bis:e.target.value})}/></label></div><button className="primary full" onClick={saveTrip}>{saved?'✓ Gespeichert':'Reise speichern'}</button></section>
+    <section id="reise" className="screen panel"><img className="sectionBrand" src="/erinnerungsglueck-logo.jpg" alt="Erinnerungsglück"/><div className="kicker">REISE ANLEGEN</div><h2>Unser nächstes Abenteuer</h2><label>Reisename<input value={trip.titel} onChange={e=>setTrip({...trip,titel:e.target.value})}/></label><label>Reiseziel<input value={trip.ziel} onChange={e=>setTrip({...trip,ziel:e.target.value})} placeholder="z. B. Hurghada, Ägypten"/></label><div className="two"><label>Von<input type="date" value={trip.von} onChange={e=>setTrip({...trip,von:e.target.value})}/></label><label>Bis<input type="date" value={trip.bis} onChange={e=>setTrip({...trip,bis:e.target.value})}/></label></div><button className="primary full" onClick={saveTrip}>{saved?'✓ Gespeichert':'Reise speichern'}</button></section>
 
     <section id="planen" className="screen panel">
+      <img className="sectionBrand" src="/erinnerungsglueck-logo.jpg" alt="Erinnerungsglück"/>
       <div className="kicker">PLANEN</div><h2>Alles Wichtige vor der Reise</h2>
       <h3>Vor der Reise</h3>
       <div className="checklist">{['Reisepässe / Ausweise geprüft','Einreisebestimmungen / Visa geprüft','Versicherungsunterlagen gespeichert','Online Check-in erledigt','Sitzplätze / Gepäck geprüft','Transfer / Parkplatz bestätigt','Bankkarten / Bargeld vorbereitet','eSIM / Roaming vorbereitet','Medikamente ausreichend vorhanden','Reiseapotheke gepackt','Briefkasten / Pflanzen / Haustiere organisiert','Fenster, Wasser & Geräte kontrolliert','Noch zu erledigen'].map(x=><label key={x}><input type="checkbox"/> <span>{x}</span></label>)}</div>
@@ -67,9 +67,10 @@ export default function Home(){
       <h4>Reiseapotheke</h4><div className="checklist">{['Dauermedikamente','Schmerzmittel','Pflaster','Desinfektion','Magen / Darm','Allergie','Sonnenschutz','Persönlicher Bedarf','Medikamente / Hinweise / Besonderheiten'].map(x=><label key={x}><input type="checkbox"/> <span>{x}</span></label>)}</div>
     </section>
 
-    <section id="budget" className="screen panel budgetPanel"><div className="kicker">BUDGETPLANER</div><h2>Urlaubskosten im Blick</h2><label>Gesamtbudget (€)<input inputMode="decimal" value={trip.budget} onChange={e=>setTrip({...trip,budget:e.target.value})} onBlur={saveTrip}/></label><div className="budgetStats"><div><small>Budget</small><b>{budget.toFixed(2)} €</b></div><div><small>Ausgegeben</small><b>{spent.toFixed(2)} €</b></div><div><small>Übrig</small><b>{rest.toFixed(2)} €</b></div></div><div className="expenseRow"><input value={expense.name} onChange={e=>setExpense({...expense,name:e.target.value})} placeholder="z. B. Transfer"/><input inputMode="decimal" value={expense.amount} onChange={e=>setExpense({...expense,amount:e.target.value})} placeholder="€"/><button onClick={addExpense}>+</button></div><div className="expenses">{expenses.length===0?<p>Noch keine Ausgaben erfasst.</p>:expenses.map(x=><div key={x.id}><span>{x.name}</span><b>{Number(x.amount).toFixed(2)} €</b></div>)}</div></section>
+    <section id="budget" className="screen panel budgetPanel"><img className="sectionBrand" src="/erinnerungsglueck-logo.jpg" alt="Erinnerungsglück"/><div className="kicker">BUDGETPLANER</div><h2>Urlaubskosten im Blick</h2><label>Gesamtbudget (€)<input inputMode="decimal" value={trip.budget} onChange={e=>setTrip({...trip,budget:e.target.value})} onBlur={saveTrip}/></label><div className="budgetStats"><div><small>Budget</small><b>{budget.toFixed(2)} €</b></div><div><small>Ausgegeben</small><b>{spent.toFixed(2)} €</b></div><div><small>Übrig</small><b>{rest.toFixed(2)} €</b></div></div><div className="expenseRow"><input value={expense.name} onChange={e=>setExpense({...expense,name:e.target.value})} placeholder="z. B. Transfer"/><input inputMode="decimal" value={expense.amount} onChange={e=>setExpense({...expense,amount:e.target.value})} placeholder="€"/><button onClick={addExpense}>+</button></div><div className="expenses">{expenses.length===0?<p>Noch keine Ausgaben erfasst.</p>:expenses.map(x=><div key={x.id}><span>{x.name}</span><b>{Number(x.amount).toFixed(2)} €</b></div>)}</div></section>
 
     <section id="erinnerungen" className="screen panel memories">
+      <img className="sectionBrand" src="/erinnerungsglueck-logo.jpg" alt="Erinnerungsglück"/>
       <div className="kicker">ERINNERUNGEN</div><h2>Momente fürs Leben bewahren</h2>
       <label>Titel<input value={memory.title} onChange={e=>setMemory({...memory,title:e.target.value})} placeholder="z. B. Unser erster Urlaubstag"/></label>
       <label>Erinnerung<textarea value={memory.text} onChange={e=>setMemory({...memory,text:e.target.value})} placeholder="Was möchtet ihr nie vergessen?"/></label>
