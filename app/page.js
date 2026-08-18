@@ -35,8 +35,7 @@ export default function Home(){
 
   return <main>
     <header className="topbar">
-      <img className="realLogo" src="/erinnerungsglueck-logo.jpg" alt="Erinnerungsglück – Familienlogo mit uns dreien" />
-      <div className="brandText"><strong>Erinnerungsglück</strong><small>GEMEINSAME ZEIT. ERINNERUNGEN FÜRS LEBEN.</small></div>
+      <img className="realLogo" src="/erinnerungsglueck-logo.jpg" alt="Erinnerungsglück – Familienlogo mit Vater, Mutter und Kind am Meer" />
     </header>
 
     <section id="start" className="screen heroCard">
