@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 const C={cream:'#FFF8EF',paper:'#FFFCF7',green:'#124F49',green2:'#4F8179',rust:'#B84C36',salmon:'#DF9981',text:'#263B39',muted:'#68736F',line:'#EEE4DA'};
-const logo='/erinnerungsglueck-logo-hq.webp?v=20260818-auswahl2';
+const logo='/erinnerungsglueck-logo.jpg?v=20260818-original-jpg';
 
 export default function Home(){
   const [screen,setScreen]=useState('Start');
