@@ -26,7 +26,7 @@ export default function Home(){
   function go(tab){setActive(tab);setTimeout(()=>document.getElementById(tab.toLowerCase())?.scrollIntoView({behavior:'smooth',block:'start'}),30)}
   return <main>
     <header className="topbar">
-      <div className="logoMark" aria-label="Erinnerungsglück Logo"><span className="adult">●</span><span className="child">●</span><span className="adult">●</span><span className="heart">♥</span></div>
+      <img className="realLogo" src="/erinnerungsglueck-logo.jpg" alt="Erinnerungsglück – Familienlogo mit uns dreien" />
       <div className="brandText"><strong>Erinnerungsglück</strong><small>GEMEINSAME ZEIT. ERINNERUNGEN FÜRS LEBEN.</small></div>
     </header>
 
@@ -44,31 +44,13 @@ export default function Home(){
 
     <section className="screen moduleGrid">{modules.map(([i,t,d])=><button key={t} className="module" onClick={()=>go(t==='Budget'?'Budget':t==='Erinnerungen'?'Erinnerungen':t==='Reise'?'Reise':'Planen')}><span className="modIcon">{i}</span><b>{t}</b><small>{d}</small></button>)}</section>
 
-    <section id="reise" className="screen panel">
-      <div className="kicker">REISE ANLEGEN</div><h2>Unser nächstes Abenteuer</h2>
-      <label>Reisename<input value={trip.titel} onChange={e=>setTrip({...trip,titel:e.target.value})}/></label>
-      <label>Reiseziel<input value={trip.ziel} onChange={e=>setTrip({...trip,ziel:e.target.value})} placeholder="z. B. Hurghada, Ägypten"/></label>
-      <div className="two"><label>Von<input type="date" value={trip.von} onChange={e=>setTrip({...trip,von:e.target.value})}/></label><label>Bis<input type="date" value={trip.bis} onChange={e=>setTrip({...trip,bis:e.target.value})}/></label></div>
-      <button className="primary full" onClick={saveTrip}>{saved?'✓ Gespeichert':'Reise speichern'}</button>
-    </section>
+    <section id="reise" className="screen panel"><div className="kicker">REISE ANLEGEN</div><h2>Unser nächstes Abenteuer</h2><label>Reisename<input value={trip.titel} onChange={e=>setTrip({...trip,titel:e.target.value})}/></label><label>Reiseziel<input value={trip.ziel} onChange={e=>setTrip({...trip,ziel:e.target.value})} placeholder="z. B. Hurghada, Ägypten"/></label><div className="two"><label>Von<input type="date" value={trip.von} onChange={e=>setTrip({...trip,von:e.target.value})}/></label><label>Bis<input type="date" value={trip.bis} onChange={e=>setTrip({...trip,bis:e.target.value})}/></label></div><button className="primary full" onClick={saveTrip}>{saved?'✓ Gespeichert':'Reise speichern'}</button></section>
 
-    <section id="planen" className="screen panel">
-      <div className="kicker">PLANEN</div><h2>Alles Wichtige vor der Reise</h2>
-      <div className="checklist">{['Reisepässe prüfen','Einreise- & Visabestimmungen prüfen','Auslandskrankenversicherung','Flug & Transfer hinterlegen','Packliste erstellen','Reiseapotheke zusammenstellen'].map(x=><label key={x}><input type="checkbox"/> <span>{x}</span></label>)}</div>
-    </section>
+    <section id="planen" className="screen panel"><div className="kicker">PLANEN</div><h2>Alles Wichtige vor der Reise</h2><div className="checklist">{['Reisepässe prüfen','Einreise- & Visabestimmungen prüfen','Auslandskrankenversicherung','Flug & Transfer hinterlegen','Packliste erstellen','Reiseapotheke zusammenstellen'].map(x=><label key={x}><input type="checkbox"/> <span>{x}</span></label>)}</div></section>
 
-    <section id="budget" className="screen panel budgetPanel">
-      <div className="kicker">BUDGETPLANER</div><h2>Urlaubskosten im Blick</h2>
-      <label>Gesamtbudget (€)<input inputMode="decimal" value={trip.budget} onChange={e=>setTrip({...trip,budget:e.target.value})} onBlur={saveTrip}/></label>
-      <div className="budgetStats"><div><small>Budget</small><b>{budget.toFixed(2)} €</b></div><div><small>Ausgegeben</small><b>{spent.toFixed(2)} €</b></div><div><small>Übrig</small><b>{rest.toFixed(2)} €</b></div></div>
-      <div className="expenseRow"><input value={expense.name} onChange={e=>setExpense({...expense,name:e.target.value})} placeholder="z. B. Transfer"/><input inputMode="decimal" value={expense.amount} onChange={e=>setExpense({...expense,amount:e.target.value})} placeholder="€"/><button onClick={addExpense}>+</button></div>
-      <div className="expenses">{expenses.length===0?<p>Noch keine Ausgaben erfasst.</p>:expenses.map(x=><div key={x.id}><span>{x.name}</span><b>{Number(x.amount).toFixed(2)} €</b></div>)}</div>
-    </section>
+    <section id="budget" className="screen panel budgetPanel"><div className="kicker">BUDGETPLANER</div><h2>Urlaubskosten im Blick</h2><label>Gesamtbudget (€)<input inputMode="decimal" value={trip.budget} onChange={e=>setTrip({...trip,budget:e.target.value})} onBlur={saveTrip}/></label><div className="budgetStats"><div><small>Budget</small><b>{budget.toFixed(2)} €</b></div><div><small>Ausgegeben</small><b>{spent.toFixed(2)} €</b></div><div><small>Übrig</small><b>{rest.toFixed(2)} €</b></div></div><div className="expenseRow"><input value={expense.name} onChange={e=>setExpense({...expense,name:e.target.value})} placeholder="z. B. Transfer"/><input inputMode="decimal" value={expense.amount} onChange={e=>setExpense({...expense,amount:e.target.value})} placeholder="€"/><button onClick={addExpense}>+</button></div><div className="expenses">{expenses.length===0?<p>Noch keine Ausgaben erfasst.</p>:expenses.map(x=><div key={x.id}><span>{x.name}</span><b>{Number(x.amount).toFixed(2)} €</b></div>)}</div></section>
 
-    <section id="erinnerungen" className="screen panel memories">
-      <div className="kicker">ERINNERUNGEN</div><h2>Momente fürs Leben bewahren</h2><p>Hier entsteht euer gemeinsames Reisetagebuch mit Fotos, Lieblingsmomenten und kleinen Geschichten.</p>
-      <div className="memoryEmpty"><span>♡</span><b>Eure erste Erinnerung</b><small>Fotos und Texte kommen im nächsten Ausbauschritt hinzu.</small></div>
-    </section>
+    <section id="erinnerungen" className="screen panel memories"><div className="kicker">ERINNERUNGEN</div><h2>Momente fürs Leben bewahren</h2><p>Hier entsteht euer gemeinsames Reisetagebuch mit Fotos, Lieblingsmomenten und kleinen Geschichten.</p><div className="memoryEmpty"><span>♡</span><b>Eure erste Erinnerung</b><small>Fotos und Texte kommen im nächsten Ausbauschritt hinzu.</small></div></section>
 
     <nav className="bottomNav">{TABS.map(t=><button key={t} onClick={()=>go(t)} className={active===t?'active':''}><span>{t==='Start'?'⌂':t==='Reise'?'✈':t==='Planen'?'☑':t==='Budget'?'€':'♡'}</span><small>{t}</small></button>)}</nav>
   </main>
