@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
-const LOGO='/erinnerungsglueck-logo-hq.webp?v=20260818b';
-const FALLBACK='/erinnerungsglueck-logo.jpg';
+const LOGO='/erinnerungsglueck-logo-hq.webp?v=20260818c';
+const FALLBACK='/erinnerungsglueck-logo.jpg?v=20260818c';
 const NAV=[['Start','⌂'],['Reise','♧'],['Packlisten','▣'],['Erinnerungen','♡'],['Budget','€']];
 const LISTS={
   'Handgepäck':['Reisepässe','Personalausweise','Buchungsbestätigung','Versicherungskarte','Tickets','Geldbörse','Handy','Ladegerät','Medikamente','Kopfhörer','Snacks','Trinkflasche','Feuchttücher','Wechselkleidung','Kuscheltier','Reiseunterlagen','Powerbank','Adapter','Sonnenbrille','Stift','Taschentücher','Desinfektion','Schlüssel','Notfallkontakte'],
@@ -38,7 +38,7 @@ export default function Home(){
 
   const header=(title,sub,back=false)=><><div className="topline"><button className="iconBtn" onClick={()=>back?go(back):go('Einstellungen')}>{back?'‹':'☰'}</button><Brand/><button className="iconBtn" onClick={()=>go('Reise')}>{back?'':'＋'}</button></div><h1 className="pageTitle">{title}</h1>{sub&&<p className="pageSub">{sub}</p>}</>;
 
-  function BottomNav(){return <nav className="bottomNav">{NAV.map(([name,icon])=><button key={name} className={screen===name?'active':''} onClick={()=>go(name)}><span>{icon}</span><small>{name}</small></button>)}</nav>}
+  function BottomNav(){return <nav className="bottomNav">{NAV.map(([name,icon])=><button key={name} className={screen===name?'active':''} onClick={()=>go(name)}><span>{icon}</span><small>{name}</small></button>)}<img className="navBrand" src={LOGO} onError={e=>{e.currentTarget.src=FALLBACK}} alt="" aria-hidden="true"/></nav>}
 
   function Start(){return <section className="appScreen homeScreen"><div className="homeLogo"><Brand large/></div><div className="homeCopy"><div className="eyebrow">FAMILIEN-REISEPLANER</div><h1>Weniger<br/>Organisationsstress.<br/><em>Mehr gemeinsame Zeit.</em></h1><p>Plant eure Reise gemeinsam, behaltet alles Wichtige an einem Ort und haltet eure schönsten Momente fest.</p><button className="primary" onClick={()=>go('Reise')}>Reise öffnen <b>›</b></button></div><div className="bands"><i/><i/><i/></div></section>}
 
